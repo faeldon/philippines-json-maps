@@ -33,18 +33,18 @@ For example the the regions map will show regional boundaries on the
 entire country. Shown below rendered using [geojson.io](www.geojson.io).
 
 `./topojson/regions/hires/regions.topo.0.1.json`
-![regions](https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/regions.png)
+<img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/regions.png" width="300">
 
 While the each of the provinces map will show provincial boundaries
 in a region.
 
 `./topojson/provinces/hires/provinces-region-cagayanvalleyregionii.topo.0.1.json`
-![province](https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/province.png)
+<img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/province.png" width="300">
 
 Same with municipalities and cities.
 
 `./topojson/municities/hires/municities-province-47-metropolitanmanila.topo.0.1.json`
-![municity](https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/municity.png)
+<img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/municity.png" width="300">
 
 ## Source Files
 
@@ -61,6 +61,8 @@ Raw shapefiles, geojson and topojson for all political boundary are
 made available. Barangay level is still under development. Please feel
 free to file any issues found.
 
+| Level   | Name                     |
+| ------- | ------------------------ |
 | Level 0 | Country                  |
 | Level 1 | Region                   |
 | Level 2 | Province                 |

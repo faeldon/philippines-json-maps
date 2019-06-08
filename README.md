@@ -32,19 +32,22 @@ administrative levels.
 For example the the regions map will show regional boundaries on the
 entire country. Shown below rendered using [geojson.io](www.geojson.io).
 
-`./topojson/regions/hires/regions.topo.0.1.json`
 <img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/regions.png" width="300">
+
+[regions.topo.0.1.json](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/regions/hires/regions.topo.0.1.json)
 
 While the each of the provinces map will show provincial boundaries
 in a region.
 
-`./topojson/provinces/hires/provinces-region-cagayanvalleyregionii.topo.0.1.json`
 <img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/province.png" width="300">
+
+[provinces-region-cagayanvalleyregionii.topo.0.1.json](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/provinces/hires/provinces-region-cagayanvalleyregionii.topo.0.1.json)
 
 Same with municipalities and cities.
 
-`./topojson/municities/hires/municities-province-47-metropolitanmanila.topo.0.1.json`
 <img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/municity.png" width="300">
+
+[municities-province-47-metropolitanmanila.topo.0.1.json](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/municities/hires/municities-province-47-metropolitanmanila.topo.0.1.json)
 
 ## Source Files
 

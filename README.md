@@ -1,14 +1,23 @@
-# Philippines Administrative Boundaries
+# Philippines Administrative Boundaries JSON Maps
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/faeldon/ph-administrative-boundaries/master/LICENSE)
 
 Philippine administrative boundaries in geojson and topojson format at
 various resolution.
 
+[Demo](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/provinces/hires/provinces-region-calabarzonregioniva.topo.0.1.json)
+
 This repository contains Philippines vector maps suitable for use on
 web applications either as an overlay to interactive map services (ex.
 [Leaflet](www.leafletjs.com)) or rendered on HTML canvas (ex.
-[d3js](www.d3js.org)). 
+[d3js](www.d3js.org)).
+
+You can download the map files in the following directories.
+
+    .
+    ├── topojson
+    ├── geojson
+    └── ...
 
 Low resolution topojson files are well suited for resource-constrained
 scenarios such as rendering dynamic maps using slow network
@@ -24,17 +33,18 @@ For example the the regions map will show regional boundaries on the
 entire country. Shown below rendered using [geojson.io](www.geojson.io).
 
 `./topojson/regions/hires/regions.topo.0.1.json`
-![regions](https://raw.githubusercontent.com/faeldon/ph-administrative-boundaries/master/images/regions.png)
+![regions](https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/regions.png)
 
 While the each of the provinces map will show provincial boundaries
 in a region.
 
 `./topojson/provinces/hires/provinces-region-cagayanvalleyregionii.topo.0.1.json`
-![province](https://raw.githubusercontent.com/faeldon/ph-administrative-boundaries/master/images/province.png)
+![province](https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/province.png)
 
 Same with municipalities and cities.
+
 `./topojson/municities/hires/municities-province-47-metropolitanmanila.topo.0.1.json`
-![municity](https://raw.githubusercontent.com/faeldon/ph-administrative-boundaries/master/images/municity.png)
+![municity](https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/municity.png)
 
 ## Source Files
 
@@ -51,13 +61,11 @@ Raw shapefiles, geojson and topojson for all political boundary are
 made available. Barangay level is still under development. Please feel
 free to file any issues found.
 
-+---------+--------------------------+
 | Level 0 | Country                  |
 | Level 1 | Region                   |
 | Level 2 | Province                 |
 | Level 3 | Municipality/Cities      |
 | Level 4 | Barangays (EXPERIMENTAL) |
-+---------+--------------------------+
 
 GeoJSON and Topojson formats are available in high, medium and low resolution files.
 

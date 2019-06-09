@@ -30,7 +30,7 @@ resolution maps.
 Files are generated for all locations in the Philippines at all
 administrative levels.
 
-For example the the regions map will show regional boundaries on the
+For example, the regions map will show regional boundaries on the
 entire country. Shown below rendered using [geojson.io](www.geojson.io).
 
 <img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/regions.png" width="300">

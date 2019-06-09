@@ -1,6 +1,7 @@
 # Philippines Administrative Boundaries JSON Maps
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/faeldon/ph-administrative-boundaries/master/LICENSE)
+[![Join the chat at https://gitter.im/faeldon/philippines-json-maps](https://badges.gitter.im/faeldon/philippines-json-maps.svg)](https://gitter.im/faeldon/philippines-json-maps?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Philippine administrative boundaries in geojson and topojson format at
 various resolution.
@@ -109,7 +110,7 @@ cd scripts
 ## Contributing
 
 Contributions are always welcome, no matter how large or small. Before contributing,
-please read the [code of conduct](CODE_OF_CONDUCT.md).
+please read the [code of conduct](./.github/CODE_OF_CONDUCT.md).
 
 
 

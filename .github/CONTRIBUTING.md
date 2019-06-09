@@ -1,6 +1,6 @@
-# Contributing to faeldon-website
+# Contributing to philippines-json-maps
 
-Love faeldon-website and want to help? Thanks so much, there's something to do for everybody!
+Love philippines-json-maps and want to help? Thanks so much, there's something to do for everybody!
 
 Please take a moment to review this document in order to make the contribution process easy and effective for everyone involved.
 
@@ -8,7 +8,7 @@ Following these guidelines helps to communicate that you respect the time of the
 
 ## Using the issue tracker
 
-The [issue tracker](https://github.com/faeldon/faeldon-website/issues) is
+The [issue tracker](https://github.com/faeldon/philippines-json-maps/issues) is
 the preferred channel for [bug reports](#bugs), [features requests](#features)
 and [submitting pull requests](#pull-requests).
 
@@ -81,11 +81,11 @@ included in the project:
 
    ```bash
    # Clone your fork of the repo into the current directory
-   git clone https://github.com/<your-username>/faeldon-website.git
+   git clone https://github.com/<your-username>/philippines-json-maps.git
    # Navigate to the newly cloned directory
-   cd faeldon-website
+   cd philippines-json-maps
    # Assign the original repo to a remote called "upstream"
-   git remote add upstream https://github.com/faeldon/faeldon-website.git
+   git remote add upstream https://github.com/faeldon/philippines-json-maps.git
    ```
 
 2. If you cloned a while ago, get the latest changes from upstream:
@@ -119,4 +119,4 @@ included in the project:
     with a clear title and description.
 
 **IMPORTANT**: By submitting a patch, you agree to allow the project
-owners to license your work under the terms of the [MIT License](https://github.com/faeldon/faeldon-website/blob/master/LICENSE.md).
+owners to license your work under the terms of the [MIT License](https://github.com/faeldon/philippines-json-maps/blob/master/LICENSE.md).

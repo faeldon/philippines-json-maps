@@ -3,7 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 ---
 
-Before opening a new issue, please take a moment to review our [**community guidelines**](https://github.com/faeldon/faeldon-website/blob/master/.github/CONTRIBUTING.md) to make the contribution process easy and effective for everyone involved.
+Before opening a new issue, please take a moment to review our [**community guidelines**](https://github.com/faeldon/philippines-json-maps/blob/master/.github/CONTRIBUTING.md) to make the contribution process easy and effective for everyone involved.
 
 ## Description
 A clear and concise description of what the bug is.

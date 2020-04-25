@@ -27,7 +27,7 @@ resolution maps.
 
 ## Sample Maps
 
-Files are generated for all locations in the Philippines at all
+Files are generated for all locations in the Philippines at different
 administrative levels.
 
 For example, the regions map will show regional boundaries on the
@@ -42,22 +42,27 @@ in a region.
 
 <img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/province.png" width="300">
 
-[provinces-region-cagayanvalleyregionii.topo.0.1.json](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/provinces/hires/provinces-region-cagayanvalleyregionii.topo.0.1.json)
+[provinces-region-ph020000000.topo.0.1.json](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/provinces/hires/provinces-region-ph020000000.topo.0.1.json)
 
 Same with municipalities and cities.
 
 <img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/municity.png" width="300">
 
-[municities-province-47-metropolitanmanila.topo.0.1.json](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/municities/hires/municities-province-47-metropolitanmanila.topo.0.1.json)
+[municities-province-47-ph137500000.topo.0.1.json](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/municities/hires/municities-province-ph137500000.topo.0.1.json)
 
 ## Source Files
 
 The raw shapefiles used to generate downstream json formats were
-downloaded from [GADM Website](http://www.gadm.org/).
+downloaded from [OCHA Services Website](https://data.humdata.org/dataset/philippines-administrative-levels-0-to-3).
 
 Maps are using the WGS 1984, Lat/Long projection.
 
-Maps last update was 2011.
+Maps last update was 2018.
+
+LIMITATION: NIR Region is still present
+
+ARCHIVE: Output from a 2011 version using [GADM Website Data](https://gadm.org)
+is also available under 2011 directory.
 
 ## Files Available
 
@@ -71,7 +76,6 @@ free to file any issues found.
 | Level 1 | Region                   |
 | Level 2 | Province                 |
 | Level 3 | Municipality/Cities      |
-| Level 4 | Barangays (EXPERIMENTAL) |
 
 GeoJSON and Topojson formats are available in high, medium and low resolution files.
 
@@ -90,6 +94,7 @@ You can modify and run the scripts on your own. For example if you want to have 
 1. Install Dependencies
 
 ```bash
+brew install gdal
 npm install -g mapshaper
 npm install -g topojson
 ```
@@ -104,7 +109,6 @@ cd scripts
 ./regions-topojson.sh
 ./provinces-topojson.sh
 ./municities-topojson.sh
-./barangays-topojson.sh
 ```
 
 ## Contributing

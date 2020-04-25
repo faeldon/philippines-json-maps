@@ -6,7 +6,7 @@
 Philippine administrative boundaries in geojson and topojson format at
 various resolution.
 
-[Demo](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/provinces/hires/provinces-region-ph020000000.topo.0.1.json)
+[Demo](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/provinces/lowres/provinces-region-ph020000000.topo.0.001.json)
 
 This repository contains Philippines vector maps suitable for use on
 web applications either as an overlay to interactive map services (ex.

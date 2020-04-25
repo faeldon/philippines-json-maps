@@ -1,23 +1,28 @@
 #!/usr/bin/env bash
 
-rm -rf ../geojson/country/*
-rm -rf ../topojson/country/*
-mkdir -p ../geojson/country/hires
-mkdir -p ../geojson/country/medres
-mkdir -p ../geojson/country/lowres
-mkdir -p ../topojson/country/hires
-mkdir -p ../topojson/country/medres
-mkdir -p ../topojson/country/lowres
+SHAPEFILE="../shapefile/2018"
+GEOJSON="../geojson/country"
+TOPOJSON="../topojson/country"
 
-#echo "[COUNTRY] Shape to GeoJSON"
-#mapshaper ../shapefile/2018/country/Country.shp -o format=geojson ../geojson/country/country.json
+unzip $SHAPEFILE/country/Country.zip -d $SHAPEFILE/country/
+for f in $SHAPEFILE/country/*.shp ; do mv "$f" "$SHAPEFILE/country/Country.shp"; done
+for f in $SHAPEFILE/country/*.dbf ; do mv "$f" "$SHAPEFILE/country/Country.dbf"; done
+
+rm -rf $GEOJSON/*
+rm -rf $TOPOJSON/*
+mkdir -p $GEOJSON/hires
+mkdir -p $GEOJSON/medres
+mkdir -p $GEOJSON/lowres
+mkdir -p $TOPOJSON/hires
+mkdir -p $TOPOJSON/medres
+mkdir -p $TOPOJSON/lowres
 
 echo "[COUNTRY] Simplifying GeoJSON"
-mapshaper ../shapefile/2018/country/Country.shp -simplify 10% -o format=geojson ../geojson/country/hires/country.0.1.json
-mapshaper ../shapefile/2018/country/Country.shp -simplify 1% -o format=geojson ../geojson/country/medres/country.0.01.json
-mapshaper ../shapefile/2018/country/Country.shp -simplify 0.1% -o format=geojson ../geojson/country/lowres/country.0.001.json
+mapshaper $SHAPEFILE/country/Country.shp -simplify 10% -o format=geojson $GEOJSON/hires/country.0.1.json
+mapshaper $SHAPEFILE/country/Country.shp -simplify 1% -o format=geojson $GEOJSON/medres/country.0.01.json
+mapshaper $SHAPEFILE/country/Country.shp -simplify 0.1% -o format=geojson $GEOJSON/lowres/country.0.001.json
 
 echo "[COUNTRY] Converting to Topojson"
-geo2topo --id-property ID_0 -p name=NAME_ENGLI -o ../topojson/country/hires/country.topo.0.1.json ../geojson/country/hires/country.0.1.json
-geo2topo --id-property ID_0 -p name=NAME_ENGLI -o ../topojson/country/medres/country.topo.0.01.json ../geojson/country/medres/country.0.01.json
-geo2topo --id-property ID_0 -p name=NAME_ENGLI -o ../topojson/country/lowres/country.topo.0.001.json ../geojson/country/lowres/country.0.001.json
+geo2topo --id-property ADM0_PCODE -p name=ADM0_EN -o $TOPOJSON/hires/country.topo.0.1.json $GEOJSON/hires/country.0.1.json
+geo2topo --id-property ADM0_PCODE -p name=ADM0_EN -o $TOPOJSON/medres/country.topo.0.01.json $GEOJSON/medres/country.0.01.json
+geo2topo --id-property ADM0_PCODE -p name=ADM0_EN -o $TOPOJSON/lowres/country.topo.0.001.json $GEOJSON/lowres/country.0.001.json

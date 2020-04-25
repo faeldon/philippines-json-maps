@@ -1,24 +1,28 @@
 #!/usr/bin/env bash
 
-rm -rf ../geojson/regions/*
-rm -rf ../topojson/regions/*
-mkdir -p ../geojson/regions/hires
-mkdir -p ../geojson/regions/medres
-mkdir -p ../geojson/regions/lowres
-mkdir -p ../topojson/regions/hires
-mkdir -p ../topojson/regions/medres
-mkdir -p ../topojson/regions/lowres
+SHAPEFILE="../shapefile/2018"
+GEOJSON="../geojson/regions"
+TOPOJSON="../topojson/regions"
 
-#echo "[REGION] Shape to GeoJSON"
-#mapshaper ../shapefile/2018/regions/Regions.shp -o format=geojson ../geojson/regions/regions.json
+unzip $SHAPEFILE/regions/Regions.zip -d $SHAPEFILE/regions/
+for f in $SHAPEFILE/regions/*.shp ; do mv "$f" "$SHAPEFILE/regions/Regions.shp"; done
+for f in $SHAPEFILE/regions/*.dbf ; do mv "$f" "$SHAPEFILE/regions/Regions.dbf"; done
+
+rm -rf $GEOJSON/*
+rm -rf $TOPOJSON/*
+mkdir -p $GEOJSON/hires
+mkdir -p $GEOJSON/medres
+mkdir -p $GEOJSON/lowres
+mkdir -p $TOPOJSON/hires
+mkdir -p $TOPOJSON/medres
+mkdir -p $TOPOJSON/lowres
 
 echo "[REGION] Simplifying GeoJSON"
-mapshaper ../shapefile/2018/regions/Regions.shp -simplify 10% -o format=geojson ../geojson/regions/hires/regions.0.1.json
-mapshaper ../shapefile/2018/regions/Regions.shp -simplify 1% -o format=geojson ../geojson/regions/medres/regions.0.01.json
-mapshaper ../shapefile/2018/regions/Regions.shp -simplify 0.1% -o format=geojson ../geojson/regions/lowres/regions.0.001.json
+mapshaper $SHAPEFILE/regions/Regions.shp -simplify 10% -o format=geojson $GEOJSON/hires/regions.0.1.json
+mapshaper $SHAPEFILE/regions/Regions.shp -simplify 1% -o format=geojson $GEOJSON/medres/regions.0.01.json
+mapshaper $SHAPEFILE/regions/Regions.shp -simplify 0.1% -o format=geojson $GEOJSON/lowres/regions.0.001.json
 
 echo "[REGION] Converting to Topojson"
-geo2topo --id-property REGION -p name=REGION -o ../topojson/regions/hires/regions.topo.0.1.json ../geojson/regions/hires/regions.0.1.json
-geo2topo --id-property REGION -p name=REGION -o ../topojson/regions/medres/regions.topo.0.01.json ../geojson/regions/medres/regions.0.01.json
-geo2topo --id-property REGION -p name=REGION -o ../topojson/regions/lowres/regions.topo.0.001.json ../geojson/regions/lowres/regions.0.001.json
-
+geo2topo --id-property ADM1_PCODE -p name=ADM1_EN -o $TOPOJSON/hires/regions.topo.0.1.json $GEOJSON/hires/regions.0.1.json
+geo2topo --id-property ADM1_PCODE -p name=ADM1_EN -o $TOPOJSON/medres/regions.topo.0.01.json $GEOJSON/medres/regions.0.01.json
+geo2topo --id-property ADM1_PCODE -p name=ADM1_EN -o $TOPOJSON/lowres/regions.topo.0.001.json $GEOJSON/lowres/regions.0.001.json

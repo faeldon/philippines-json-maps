@@ -3,6 +3,11 @@
 SHAPEFILE="../shapefile/2018"
 GEOJSON="../geojson/municties"
 TOPOJSON="../topojson/municities"
+
+unzip $SHAPEFILE/municities/Municities.zip -d $SHAPEFILE/municities/
+for f in $SHAPEFILE/municities/*.shp ; do mv "$f" "$SHAPEFILE/municities/Municities.shp"; done
+for f in $SHAPEFILE/municities/*.dbf ; do mv "$f" "$SHAPEFILE/municities/Municities.dbf"; done
+
 rm -rf $GEOJSON/*
 rm -rf $TOPOJSON/*
 mkdir -p $GEOJSON/hires

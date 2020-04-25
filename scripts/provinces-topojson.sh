@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+SHAPEFILE="../shapefile/2018"
 GEOJSON="../geojson/provinces"
 TOPOJSON="../topojson/provinces"
 rm -rf $GEOJSON/*
@@ -10,6 +11,11 @@ mkdir -p $GEOJSON/lowres
 mkdir -p $TOPOJSON/hires
 mkdir -p $TOPOJSON/medres
 mkdir -p $TOPOJSON/lowres
+
+echo "[PROVINCE] Generataing Region List"
+ogr2ogr -f CSV -select ADM1_PCODE regions_raw.csv $SHAPEFILE/regions/Regions.shp
+sed 1d regions_raw.csv > regions.csv # Remove header
+rm regions_raw.csv
 array=()
 
 # Read the file in parameter and fill the array named "array"
@@ -22,21 +28,22 @@ getArray() {
   done < $1
 }
 
-getArray "regions.dat"
+echo "[PROVINCE] Reading Array"
+getArray "regions.csv"
 
 for e in "${!array[@]}"
 do
   f=`echo ${array[$e]} | tr -dc '[:alnum:]\n\r' | tr '[:upper:]' '[:lower:]'`
-  g=$(($e + 1))
-  echo "[PROVINCE] Processing $g-$f"
-  ogr2ogr -where "REGION='${array[$e]}'" -f GeoJSON $GEOJSON/provinces-region-${f}.json ../shapefile/provinces/Provinces.shp
+  echo "[PROVINCE] Processing $f"
+  ogr2ogr -mapFieldType Date=String -where "ADM1_PCODE='${array[$e]}'" -f GeoJSON $GEOJSON/provinces-region-${f}.json $SHAPEFILE/provinces/Provinces.shp
   
   mapshaper $GEOJSON/provinces-region-${f}.json -simplify 10% -o $GEOJSON/hires/provinces-region-${f}.0.1.json
   mapshaper $GEOJSON/provinces-region-${f}.json -simplify 1% -o $GEOJSON/medres/provinces-region-${f}.0.01.json
   mapshaper $GEOJSON/provinces-region-${f}.json -simplify 0.1% -o $GEOJSON/lowres/provinces-region-${f}.0.001.json
 
-  geo2topo --id-property ID_1 -p name=NAME_1 -p region=REGION -o $TOPOJSON/hires/provinces-region-${f}.topo.0.1.json $GEOJSON/hires/provinces-region-${f}.0.1.json
-  geo2topo --id-property ID_1 -p name=NAME_1 -p region=REGION -o $TOPOJSON/medres/provinces-region-${f}.topo.0.01.json $GEOJSON/medres/provinces-region-${f}.0.01.json
-  geo2topo --id-property ID_1 -p name=NAME_1 -p region=REGION -o $TOPOJSON/lowres/provinces-region-${f}.topo.0.001.json $GEOJSON/lowres/provinces-region-${f}.0.001.json
+  geo2topo --id-property ADM2_PCODE -p name=ADM2_EN -p region_id=ADM1_PCODE -o $TOPOJSON/hires/provinces-region-${f}.topo.0.1.json $GEOJSON/hires/provinces-region-${f}.0.1.json
+  geo2topo --id-property ADM2_PCODE -p name=ADM2_EN -p region_id=ADM1_PCODE -o $TOPOJSON/medres/provinces-region-${f}.topo.0.01.json $GEOJSON/medres/provinces-region-${f}.0.01.json
+  geo2topo --id-property ADM2_PCODE -p name=ADM2_EN -p region_id=ADM1_PCODE -o $TOPOJSON/lowres/provinces-region-${f}.topo.0.001.json $GEOJSON/lowres/provinces-region-${f}.0.001.json
 done
 
+rm regions.csv

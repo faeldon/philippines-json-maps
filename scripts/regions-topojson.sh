@@ -8,13 +8,14 @@ mkdir -p ../geojson/regions/lowres
 mkdir -p ../topojson/regions/hires
 mkdir -p ../topojson/regions/medres
 mkdir -p ../topojson/regions/lowres
+
 echo "[REGION] Shape to GeoJSON"
-ogr2ogr -f GeoJSON ../geojson/regions/regions.json ../shapefile/regions/Regions.shp
+mapshaper ../shapefile/2018/regions/Regions.shp -o format=geojson ../geojson/regions/regions.json
 
 echo "[REGION] Simplifying GeoJSON"
-mapshaper ../geojson/regions/regions.json -simplify 10% -o ../geojson/regions/hires/regions.0.1.json
-mapshaper ../geojson/regions/regions.json -simplify 1% -o ../geojson/regions/medres/regions.0.01.json
-mapshaper ../geojson/regions/regions.json -simplify 0.1% -o ../geojson/regions/lowres/regions.0.001.json
+mapshaper ../shapefile/2018/regions/Regions.shp -simplify 10% -o format=geojson ../geojson/regions/hires/regions.0.1.json
+mapshaper ../shapefile/2018/regions/Regions.shp -simplify 1% -o format=geojson ../geojson/regions/medres/regions.0.01.json
+mapshaper ../shapefile/2018/regions/Regions.shp -simplify 0.1% -o format=geojson ../geojson/regions/lowres/regions.0.001.json
 
 echo "[REGION] Converting to Topojson"
 geo2topo --id-property REGION -p name=REGION -o ../topojson/regions/hires/regions.topo.0.1.json ../geojson/regions/hires/regions.0.1.json

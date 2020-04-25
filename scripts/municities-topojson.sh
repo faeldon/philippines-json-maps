@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+SHAPEFILE="../shapefile/2018"
 GEOJSON="../geojson/municties"
 TOPOJSON="../topojson/municities"
 rm -rf $GEOJSON/*
@@ -12,6 +13,12 @@ mkdir -p $TOPOJSON/medres
 mkdir -p $TOPOJSON/lowres
 array=()
 
+echo "[MUNICITY] Generataing Province List"
+ogr2ogr -f CSV -select ADM2_PCODE provinces_raw.csv $SHAPEFILE/provinces/Provinces.shp
+sed 1d provinces_raw.csv > provinces.csv # Remove header
+rm provinces_raw.csv
+array=()
+
 # Read the file in parameter and fill the array named "array"
 getArray() {
   i=0
@@ -22,21 +29,22 @@ getArray() {
   done < $1
 }
 
-getArray "provinces.dat"
+echo "[PROVINCE] Reading Array"
+getArray "provinces.csv"
 
 for e in "${!array[@]}"
 do
   f=`echo ${array[$e]} | tr -dc '[:alnum:]\n\r' | tr '[:upper:]' '[:lower:]'`
-  g=$(($e + 1))
-  echo "[MUNICITY] Processing $g-$f"
-  ogr2ogr -where "PROVINCE='${array[$e]}' AND TYPE_2<>'Waterbody'" -f GeoJSON $GEOJSON/municities-province-${g}-${f}.json ../shapefile/municities/MuniCities.shp
+  echo "[MUNICITY] Processing $f"
+  ogr2ogr -mapFieldType Date=String -where "ADM2_PCODE='${array[$e]}'" -f GeoJSON $GEOJSON/municities-province-${f}.json $SHAPEFILE/municities/Municities.shp
   
-  mapshaper $GEOJSON/municities-province-${g}-${f}.json -simplify 10% -o $GEOJSON/hires/municities-province-${g}-${f}.0.1.json
-  mapshaper $GEOJSON/municities-province-${g}-${f}.json -simplify 1% -o $GEOJSON/medres/municities-province-${g}-${f}.0.01.json
-  mapshaper $GEOJSON/municities-province-${g}-${f}.json -simplify 0.1% -o $GEOJSON/lowres/municities-province-${g}-${f}.0.001.json
+  mapshaper $GEOJSON/municities-province-${f}.json -simplify 10% -o $GEOJSON/hires/municities-province-${f}.0.1.json
+  mapshaper $GEOJSON/municities-province-${f}.json -simplify 1% -o $GEOJSON/medres/municities-province-${f}.0.01.json
+  mapshaper $GEOJSON/municities-province-${f}.json -simplify 0.1% -o $GEOJSON/lowres/municities-province-${f}.0.001.json
 
-  geo2topo --id-property ID_2 -p name=NAME_2 -p province=PROVINCE -p region=REGION -p mctype=ENGTYPE_2 -o $TOPOJSON/hires/municities-province-${g}-${f}.topo.0.1.json $GEOJSON/hires/municities-province-${g}-${f}.0.1.json
-  geo2topo --id-property ID_2 -p name=NAME_2 -p province=PROVINCE -p region=REGION -p mctype=ENGTYPE_2 -o $TOPOJSON/medres/municities-province-${g}-${f}.topo.0.01.json $GEOJSON/medres/municities-province-${g}-${f}.0.01.json
-  geo2topo --id-property ID_2 -p name=NAME_2 -p province=PROVINCE -p region=REGION -p mctype=ENGTYPE_2 -o $TOPOJSON/lowres/municities-province-${g}-${f}.topo.0.001.json $GEOJSON/lowres/municities-province-${g}-${f}.0.001.json
+  geo2topo --id-property ADM3_PCODE -p name=ADM3_EN -p province_id=ADM2_PCODE -p region_id=ADM1_PCODE -o $TOPOJSON/hires/municities-province-${f}.topo.0.1.json $GEOJSON/hires/municities-province-${f}.0.1.json
+  geo2topo --id-property ADM3_PCODE -p name=ADM3_EN -p province_id=ADM2_PCODE -p region_id=ADM1_PCODE -o $TOPOJSON/medres/municities-province-${f}.topo.0.01.json $GEOJSON/medres/municities-province-${f}.0.01.json
+  geo2topo --id-property ADM3_PCODE -p name=ADM3_EN -p province_id=ADM2_PCODE -p region_id=ADM1_PCODE -o $TOPOJSON/lowres/municities-province-${f}.topo.0.001.json $GEOJSON/lowres/municities-province-${f}.0.001.json
 done
 
+rm provinces.csv

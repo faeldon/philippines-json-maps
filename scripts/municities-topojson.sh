@@ -45,6 +45,8 @@ do
   geo2topo --id-property ADM3_PCODE -p name=ADM3_EN -p province_id=ADM2_PCODE -p region_id=ADM1_PCODE -o $TOPOJSON/hires/municities-province-${f}.topo.0.1.json $GEOJSON/hires/municities-province-${f}.0.1.json
   geo2topo --id-property ADM3_PCODE -p name=ADM3_EN -p province_id=ADM2_PCODE -p region_id=ADM1_PCODE -o $TOPOJSON/medres/municities-province-${f}.topo.0.01.json $GEOJSON/medres/municities-province-${f}.0.01.json
   geo2topo --id-property ADM3_PCODE -p name=ADM3_EN -p province_id=ADM2_PCODE -p region_id=ADM1_PCODE -o $TOPOJSON/lowres/municities-province-${f}.topo.0.001.json $GEOJSON/lowres/municities-province-${f}.0.001.json
+
+  rm $GEOJSON/municities-province-${f}.json # Delete because this is a large file
 done
 
 rm provinces.csv

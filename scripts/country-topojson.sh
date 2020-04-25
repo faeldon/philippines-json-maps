@@ -9,8 +9,8 @@ mkdir -p ../topojson/country/hires
 mkdir -p ../topojson/country/medres
 mkdir -p ../topojson/country/lowres
 
-echo "[COUNTRY] Shape to GeoJSON"
-mapshaper ../shapefile/2018/country/Country.shp -o format=geojson ../geojson/country/country.json
+#echo "[COUNTRY] Shape to GeoJSON"
+#mapshaper ../shapefile/2018/country/Country.shp -o format=geojson ../geojson/country/country.json
 
 echo "[COUNTRY] Simplifying GeoJSON"
 mapshaper ../shapefile/2018/country/Country.shp -simplify 10% -o format=geojson ../geojson/country/hires/country.0.1.json

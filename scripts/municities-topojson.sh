@@ -5,8 +5,6 @@ GEOJSON="../geojson/municties"
 TOPOJSON="../topojson/municities"
 
 unzip $SHAPEFILE/municities/Municities.zip -d $SHAPEFILE/municities/
-for f in $SHAPEFILE/municities/*.shp ; do mv "$f" "$SHAPEFILE/municities/Municities.shp"; done
-for f in $SHAPEFILE/municities/*.dbf ; do mv "$f" "$SHAPEFILE/municities/Municities.dbf"; done
 
 rm -rf $GEOJSON/*
 rm -rf $TOPOJSON/*
@@ -34,7 +32,7 @@ getArray() {
   done < $1
 }
 
-echo "[PROVINCE] Reading Array"
+echo "[MUNICITY] Reading Array"
 getArray "provinces.csv"
 
 for e in "${!array[@]}"

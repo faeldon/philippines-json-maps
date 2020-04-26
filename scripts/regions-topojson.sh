@@ -5,8 +5,6 @@ GEOJSON="../geojson/regions"
 TOPOJSON="../topojson/regions"
 
 unzip $SHAPEFILE/regions/Regions.zip -d $SHAPEFILE/regions/
-for f in $SHAPEFILE/regions/*.shp ; do mv "$f" "$SHAPEFILE/regions/Regions.shp"; done
-for f in $SHAPEFILE/regions/*.dbf ; do mv "$f" "$SHAPEFILE/regions/Regions.dbf"; done
 
 rm -rf $GEOJSON/*
 rm -rf $TOPOJSON/*

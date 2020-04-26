@@ -44,11 +44,9 @@ in a region.
 
 [provinces-region-ph020000000.topo.0.1.json](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/provinces/hires/provinces-region-ph020000000.topo.0.1.json)
 
-Same with municipalities and cities.
+Same with municipalities and cities and barangays.
 
 <img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/municity.png" width="300">
-
-[municities-province-47-ph137500000.topo.0.1.json](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/municities/hires/municities-province-ph137500000.topo.0.1.json)
 
 ## Source Files
 
@@ -74,8 +72,9 @@ free to file any issues found.
 | ------- | ------------------------ |
 | Level 0 | Country                  |
 | Level 1 | Region                   |
-| Level 2 | Province                 |
+| Level 2 | Province/District        |
 | Level 3 | Municipality/Cities      |
+| Level 4 | Barangays                |
 
 GeoJSON and Topojson formats are available in high, medium and low resolution files.
 

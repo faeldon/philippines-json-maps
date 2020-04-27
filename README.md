@@ -50,14 +50,19 @@ Same with municipalities and cities and barangays.
 
 ## Source Files
 
-The raw shapefiles used to generate downstream json formats were
-downloaded from [OCHA Services
-Website](https://data.humdata.org/dataset/philippines-administrative-levels-0-to-3).
-
 Maps are using the WGS 1984, Lat/Long projection.
 
-Maps last update was Dec 2018. Please refer to the [PSGC Summary of
-Changes](https://psa.gov.ph/classification/psgc/downloads/PSGC%20Summary%20of%20Changes%20Dec%202019.xlsx)
+The shapefiles used for this project is available at [this
+repo](https://github.com/faeldon/philippines-psgc-shapefiles).
+
+The 2015 Level 0 to 3 shapefiles came from [OCHA Services
+Website](https://data.humdata.org/dataset/philippines-administrative-levels-0-to-3).
+
+The 2015 Level 4 shapefiles came from [this Github Repo](https://github.com/justinelliotmeyers/official_philippines_shapefile_data_2016)
+
+The 2011 Level 0 to 4 shapefiles came from [GADM Website Data](https://gadm.org)
+
+Please refer to the [PSGC Summary of Changes](https://psa.gov.ph/classification/psgc/downloads/PSGC%20Summary%20of%20Changes%20Dec%202019.xlsx)
 to take into account potential issues that may arise when using these maps together with your datasets. 
 
 Here are some important considerations when using these maps.

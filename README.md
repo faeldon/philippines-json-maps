@@ -51,22 +51,29 @@ Same with municipalities and cities and barangays.
 ## Source Files
 
 The raw shapefiles used to generate downstream json formats were
-downloaded from [OCHA Services Website](https://data.humdata.org/dataset/philippines-administrative-levels-0-to-3).
+downloaded from [OCHA Services
+Website](https://data.humdata.org/dataset/philippines-administrative-levels-0-to-3).
 
 Maps are using the WGS 1984, Lat/Long projection.
 
-Maps last update was 2018.
+Maps last update was Dec 2018. Please refer to the [PSGC Summary of
+Changes](https://psa.gov.ph/classification/psgc/downloads/PSGC%20Summary%20of%20Changes%20Dec%202019.xlsx)
+to take into account potential issues that may arise when using these maps together with your datasets. 
 
-LIMITATION: NIR Region is still present
+Here are some important considerations when using these maps.
+- The precense of NIR Region -- was recently abolished
+- Renaming of ARMM to BARRM
+- Various location naming changes
 
-ARCHIVE: Output from a 2011 version using [GADM Website Data](https://gadm.org)
+## Previous Maps
+
+Output from a 2011 version of the map using [GADM Website Data](https://gadm.org)
 is also available under 2011 directory.
 
 ## Files Available
 
 Raw shapefiles, geojson and topojson for all political boundary are
-made available. Barangay level is still under development. Please feel
-free to file any issues found.
+made available. Please feel free to file issues found.
 
 | Level   | Name                     |
 | ------- | ------------------------ |

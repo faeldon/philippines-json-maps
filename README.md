@@ -66,7 +66,7 @@ Please refer to the [PSGC Summary of Changes](https://psa.gov.ph/classification/
 to take into account potential issues that may arise when using these maps together with your datasets. 
 
 Here are some important considerations when using these maps.
-- The precense of NIR Region -- was recently abolished
+- The presence of NIR Region -- was recently abolished
 - Renaming of ARMM to BARRM
 - Various location naming changes
 

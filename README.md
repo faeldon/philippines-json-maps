@@ -4,7 +4,7 @@
 
 Philippine administrative boundaries in geojson and topojson format at various resolution.
 
-[Demo](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/provinces/lowres/provinces-region-ph020000000.topo.0.001.json)
+[Demo](https://github.com/faeldon/philippines-json-maps/blob/master/2023/topojson/regions/lowres/provdists-region-200000000.topo.0.001.json)
 
 This repository contains Philippines vector maps suitable for use on
 web applications either as an overlay to interactive map services (ex.
@@ -33,14 +33,10 @@ entire country. Shown below rendered using [geojson.io](www.geojson.io).
 
 <img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/regions.png" width="300">
 
-[regions.topo.0.1.json](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/regions/hires/regions.topo.0.1.json)
-
 While the each of the provinces map will show provincial boundaries
 in a region.
 
 <img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/province.png" width="300">
-
-[provinces-region-ph020000000.topo.0.1.json](https://github.com/faeldon/philippines-json-maps/blob/master/topojson/provinces/hires/provinces-region-ph020000000.topo.0.1.json)
 
 Same with municipalities and cities and barangays.
 

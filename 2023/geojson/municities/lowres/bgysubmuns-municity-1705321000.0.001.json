@@ -1,0 +1,3 @@
+{"type":"FeatureCollection", "features": [
+{"type":"Feature","geometry":null,"properties":{"adm1_psgc":1700000000,"adm2_psgc":1705300000,"adm3_psgc":1705321000,"adm4_psgc":1705321004,"adm4_en":"Pag-Asa","geo_level":"Bgy","len_crs":3444,"area_crs":408589,"len_km":3,"area_km2":0},"id":1705321004}
+]}

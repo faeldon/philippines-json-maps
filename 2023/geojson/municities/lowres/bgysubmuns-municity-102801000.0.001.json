@@ -1,0 +1,3 @@
+{"type":"FeatureCollection", "features": [
+{"type":"Feature","geometry":null,"properties":{"adm1_psgc":100000000,"adm2_psgc":102800000,"adm3_psgc":102801000,"adm4_psgc":102801001,"adm4_en":"Adams","geo_level":"Bgy","len_crs":45997,"area_crs":111184551,"len_km":45,"area_km2":111},"id":102801001}
+]}

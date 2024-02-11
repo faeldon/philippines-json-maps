@@ -50,8 +50,7 @@ Same with municipalities and cities and barangays.
 
 Maps are using EPSG:32651, Lat/Long projection.
 
-The shapefiles used for this project is available from [this
-project](https://github.com/altcoder/philippines-psgc-shapefiles).
+The shapefiles used as source for this project is available from [altcoder/philippines-psgc-shapefiles](https://github.com/altcoder/philippines-psgc-shapefiles).
 
 The administrative level shapefiles uses PSGC data updated as of [31 December 2023](https://psa.gov.ph/system/files/scd/PSGC-4Q-2023-National-and-Provincial-Summary.xlsx).
 

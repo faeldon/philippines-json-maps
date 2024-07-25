@@ -88,7 +88,9 @@ npm install -g mapshaper
 
 2. Modify scripts under `scripts/`
 
-3. Run the scripts (running barangays-topojson.sh might take a few minutes to finish)
+3. Copy shapefiles (zipped) from [altcoder/philippines-psgc-shapefiles](https://github.com/altcoder/philippines-psgc-shapefiles) to `scripts/2023/processed` directory.
+
+4. Run the scripts (in order). Note that running barangays-topojson.sh might take a few minutes to finish.
 
 ```bash
 cd scripts

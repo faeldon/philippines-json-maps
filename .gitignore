@@ -1,5 +1,5 @@
 # Input Data 
-scripts/processed
+scripts/processed/
 
 # Cruft
 .DS_Store

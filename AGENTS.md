@@ -9,9 +9,11 @@ The tree holds one distribution, `latest/` (the newest quarter, medres and lowre
 ## Commands
 
 ```bash
-# The gate: every latest/ file parses, and nothing that must stay out of the tree is in it
+# The gate: every latest/ file parses, nothing that must stay out of the tree is in it,
+# and no commit carries a Co-Authored-By: Claude trailer
 find latest -name '*.json' -print0 | xargs -0 -n 500 jq empty \
-  && test -z "$(git ls-files --cached --others --exclude-standard -- ':(glob)[0-9][0-9][0-9][0-9]-[1-4]q/**' dist 'scripts/20*' ':(glob)**/hires/**')"
+  && test -z "$(git ls-files --cached --others --exclude-standard -- ':(glob)[0-9][0-9][0-9][0-9]-[1-4]q/**' dist 'scripts/20*' ':(glob)**/hires/**')" \
+  && test -z "$(git log -i --grep='^Co-Authored-By: Claude' --format=%h)"
 
 # One file
 jq empty latest/topojson/regions/lowres/provdists-region-1100000000.topo.0.001.json
@@ -82,10 +84,12 @@ at medres and lowres (911 did before change 012).
 
 - **Paths are public API.** `latest/`'s layout and naming are stable and hotlinked through
   `raw.githubusercontent.com/.../master/latest/...`. A file name changes only when its PSGC code
-  does, and every release's notes list those. Each release's assets are immutable once published.
+  does, and every release's notes list those. Each release's assets are immutable once published:
+  never replaced, renamed or re-uploaded.
 - **Vintages are releases.** Every PSGC quarter is a GitHub release of this repo with all
-  resolutions and a `SHA256SUMS`; a published release is never replaced. Only the newest quarter
-  is in the tree, at `latest/`, medres and lowres only.
+  resolutions and a `SHA256SUMS`; a published release's assets are never replaced, and its tag
+  may be re-pointed only to a commit with an identical tree (017 did, to strip AI co-author
+  trailers). Only the newest quarter is in the tree, at `latest/`, medres and lowres only.
 - **The PSGC hierarchy holds.** Feature ids are the PSGC code of their level, and each child file
   holds exactly the children of the parent its name gives: every feature's parent code is that
   code, and no child of that parent is missing or in another file.

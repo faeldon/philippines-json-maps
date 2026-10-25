@@ -143,9 +143,8 @@ This repository is developed with AI coding assistance: Claude (Anthropic), thro
 [Claude Code](https://claude.com/claude-code). The maintainer reviews and approves every change,
 and is responsible for what is published. The AI works under the rules in [AGENTS.md](AGENTS.md),
 whose invariants every build must keep (each file holds exactly its parent's children, under their
-PSGC codes), and through the change process in [.sdlc/SDLC.md](.sdlc/SDLC.md). Some commits
-carry a `Co-Authored-By: Claude` line and many don't; this section is the disclosure for the
-whole repository.
+PSGC codes), and through the change process in [.sdlc/SDLC.md](.sdlc/SDLC.md). Commits carry no
+AI co-author lines; this section is the disclosure for the whole repository.
 
 ## Contributing
 

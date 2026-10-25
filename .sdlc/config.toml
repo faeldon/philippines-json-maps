@@ -1,8 +1,9 @@
 [commands]
 # Every file in latest/ parses, and nothing that must stay out of the tree is in it: a build
 # directory (<quarter>/), dist/, a copy under scripts/ (8bea49f3 committed one), or any hires/
-# file (hires ships only in releases). Offline, a few seconds.
-check = "find latest -name '*.json' -print0 | xargs -0 -n 500 jq empty && test -z \"$(git ls-files --cached --others --exclude-standard -- ':(glob)[0-9][0-9][0-9][0-9]-[1-4]q/**' dist 'scripts/20*' ':(glob)**/hires/**')\""
+# file (hires ships only in releases); and no commit carries a Co-Authored-By: Claude trailer
+# (017 stripped them from history). Offline, a few seconds.
+check = "find latest -name '*.json' -print0 | xargs -0 -n 500 jq empty && test -z \"$(git ls-files --cached --others --exclude-standard -- ':(glob)[0-9][0-9][0-9][0-9]-[1-4]q/**' dist 'scripts/20*' ':(glob)**/hires/**')\" && test -z \"$(git log -i --grep='^Co-Authored-By: Claude' --format=%h)\""
 
 [docs]
 # The guide is AGENTS.md; CLAUDE.md only imports it, so the invariants live in AGENTS.md.

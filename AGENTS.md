@@ -25,6 +25,7 @@ Regenerating needs `brew install gdal` and `npm install -g mapshaper`. A new qua
 ```bash
 scripts/build-quarter.sh v1.0.0 2026-3q   # source release tag, quarter: builds 2026-3q/ (ignored)
 scripts/publish-latest.sh 2026-3q         # replaces latest/ with its medres + lowres
+scripts/sample-maps.sh                    # redraws the README's images/ from latest/
 ```
 
 `build-quarter.sh` runs the four level scripts in order (country, regions, provdists,

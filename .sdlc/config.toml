@@ -11,6 +11,11 @@ policy = "AGENTS.md"
 # Changes are numbered by their GitHub issue on faeldon/philippines-json-maps.
 target = "github"
 
+[git]
+# The default branch is master, not main. Pinned so a local `main` branch, if one
+# ever appears, can't take over as the base.
+base = "master"
+
 [retro]
 # What users did, as counts, for the product pass. Needs the network; only /sdlc:retro runs them.
 evidence = [

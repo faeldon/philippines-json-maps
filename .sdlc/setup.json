@@ -20,6 +20,7 @@
     "docs.project",
     "docs.read_before_design",
     "docs.review",
+    "git.base",
     "metrics.idle_minutes",
     "metrics.stop_allowance",
     "metrics.transcripts",
@@ -121,7 +122,7 @@
   "templates": {
     "checks.md": "sha256:d4ba97e6351ca8b5",
     "direction.md": "sha256:3ca66395f1541f47",
-    "ideas.md": "sha256:8a10397f7c439cd1",
+    "ideas.md": "sha256:b35cb3d8ae7c71ee",
     "intent.md": "sha256:bfb0464c4b5e5f71",
     "issue.md": "sha256:4c0f2bfd4c54e4a3",
     "nits.md": "sha256:52ba163c34fd84ed",

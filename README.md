@@ -4,19 +4,26 @@
 
 Philippine administrative boundaries in geojson and topojson format at various resolution.
 
-[Demo](https://github.com/faeldon/philippines-json-maps/blob/master/2023/topojson/regions/lowres/provdists-region-200000000.topo.0.001.json)
+[Demo](https://github.com/faeldon/philippines-json-maps/blob/master/latest/topojson/regions/lowres/provdists-region-200000000.topo.0.001.json)
 
 This repository contains Philippines vector maps suitable for use on
 web applications either as an overlay to interactive map services (ex.
 [Leaflet](www.leafletjs.com)) or rendered on HTML canvas (ex.
 [d3js](www.d3js.org)).
 
-You can download the map files in the following directories.
+The newest maps are in `latest/`: PSGC 3Q 2026, in medium and low resolution.
 
-    2023
+    latest
+    ├── manifest.json   # version, PSGC quarter, source release
     ├── topojson
-    ├── geojson
-    └── ...
+    │   └── <country|regions|provdists|municities>/<medres|lowres>/
+    └── geojson
+        └── ...
+
+High resolution files, and every earlier vintage, are in this repo's
+[releases](https://github.com/faeldon/philippines-json-maps/releases), one zip per format and
+resolution with a `SHA256SUMS`. Release `v1.0.0` is 3Q 2026; link a release asset, not
+`latest/`, when you need a quarter that never changes.
 
 Low resolution topojson files are well suited for resource-constrained
 scenarios such as rendering dynamic maps using slow network
@@ -44,17 +51,21 @@ Same with municipalities and cities and barangays.
 
 ## Source Files
 
-Maps are using EPSG:32651, Lat/Long projection.
+Maps are in WGS84 longitude/latitude (EPSG:4326), reprojected from the source shapefiles' EPSG:32651.
 
-The shapefiles used as source for this project are published as releases of [faeldon/philippines-psgc-shapefiles](https://github.com/faeldon/philippines-psgc-shapefiles). The `2023/` maps are built from release [`psgc-2023-4q`](https://github.com/faeldon/philippines-psgc-shapefiles/releases/tag/psgc-2023-4q).
+The shapefiles used as source for this project are published as releases of [faeldon/philippines-psgc-shapefiles](https://github.com/faeldon/philippines-psgc-shapefiles). `latest/` is built from its release [`v1.0.0`](https://github.com/faeldon/philippines-psgc-shapefiles/releases/tag/v1.0.0), PSGC 3Q 2026; `latest/manifest.json` says which quarter and release it holds.
 
-The administrative level shapefiles uses PSGC data updated as of [31 December 2023](https://psa.gov.ph/system/files/scd/PSGC-4Q-2023-National-and-Provincial-Summary.xlsx).
+**Codes changed in 3Q 2026.** The Negros Island Region (`1800000000`) was created from Negros Occidental, Negros Oriental and Siquijor, and Sulu moved to Region IX, so their codes changed (e.g. `604500000` → `1804500000`, `1906600000` → `906600000`). A file's name holds its parent's code, so those files are renamed: the [v1.0.0 release notes](https://github.com/faeldon/philippines-json-maps/releases/tag/v1.0.0) list every one.
 
-**BARMM interim province file moved.** The interim province for the 63 BARMM barangays has PSGC code `1999900000` in the source release, so its municipalities are now in `municities-provdist-1999900000.*`. The old `municities-provdist-1909900000.*` files were empty and have been removed.
+**Barangay shapes.** Each barangay keeps the source's `geom_src` property: `source` is the boundary file's own shape, `dissolved` the union of barangays PSA has merged, and `plotted` a barangay plotted from the bearings and distances of the law that created it. Barangays the source has no shape for (`geom_src` `none`) are left out.
 
 ## Previous Maps
 
-Output from a 2019, 2011 versions is available under `2011/` and `2019/` directory.
+`2023/`, `2019/` and `2011/` left the tree in v1.0.0. Each is a release, with every file it held:
+
+- [`2023-4q`](https://github.com/faeldon/philippines-json-maps/releases/tag/2023-4q): PSGC 4Q 2023, formerly `2023/`
+- [`2019`](https://github.com/faeldon/philippines-json-maps/releases/tag/2019): formerly `2019/`
+- [`2011`](https://github.com/faeldon/philippines-json-maps/releases/tag/2011): formerly `2011/`
 
 ## Files Available
 
@@ -69,7 +80,7 @@ made available. Please feel free to file issues found.
 | Level 3 | Municipality/Cities      |
 | Level 4 | Barangays/Sub-Municipalities |
 
-GeoJSON and Topojson formats are available in high, medium and low resolution files.
+GeoJSON and Topojson formats are available in medium and low resolution in `latest/`, and in high, medium and low resolution in each release.
 
 ## Conversion Process
 
@@ -90,15 +101,13 @@ npm install -g mapshaper
 
 2. Modify scripts under `scripts/`
 
-3. Run the scripts (in order). Each one fetches the shapefiles it needs with `scripts/fetch-shapefiles.sh` into `scripts/processed/2023-4q/` (ignored by git) and checks them against the release's `SHA256SUMS`. It copies them from a local checkout of `philippines-psgc-shapefiles` beside this repo when one has them (set `PSGC_STAGING` to point elsewhere), and otherwise downloads them from the release. Note that running topojson-municities.sh might take a while to finish.
+3. Build a quarter, naming the source release and the quarter. This runs the four level scripts in order and writes every format and resolution to `2026-3q/` (ignored by git). Each script fetches the shapefiles it needs with `scripts/fetch-shapefiles.sh` into `scripts/processed/2026-3q/` (also ignored) and checks them against the release's `SHA256SUMS`. It copies them from a local checkout of `philippines-psgc-shapefiles` beside this repo when one has them (set `PSGC_STAGING` to point elsewhere), and otherwise downloads them from the release. The barangay level takes a while.
 
 ```bash
-cd scripts
-./topojson-country.sh
-./topojson-regions.sh
-./topojson-provdists.sh
-./topojson-municities.sh
+scripts/build-quarter.sh v1.0.0 2026-3q
 ```
+
+4. To publish it in the tree, `scripts/publish-latest.sh 2026-3q` replaces `latest/` with its medium and low resolution files.
 
 ## Contributing
 

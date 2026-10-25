@@ -1,0 +1,9 @@
+{
+  "version": "0.0.0",
+  "psgc": "2026-3q",
+  "source": {
+    "repo": "faeldon/philippines-psgc-shapefiles",
+    "tag": "v1.0.0"
+  },
+  "built": "2026-10-25"
+}

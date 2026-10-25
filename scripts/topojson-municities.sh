@@ -2,12 +2,14 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-YEAR=2023 TAG=psgc-2023-4q QUARTER=2023-4q
+[ $# -eq 2 ] && [[ $2 =~ ^[0-9]{4}-[1-4]q$ ]] || {
+  echo "usage: $(basename "$0") TAG QUARTER   (e.g. v1.0.0 2026-3q)" >&2; exit 2; }
+TAG=$1 QUARTER=$2
 "$ROOT/scripts/fetch-shapefiles.sh" "$TAG" "$QUARTER"
 
 SHAPEFILE="$ROOT/scripts/processed/$QUARTER"
-GEOJSON="$ROOT/$YEAR/geojson/municities"
-TOPOJSON="$ROOT/$YEAR/topojson/municities"
+GEOJSON="$ROOT/$QUARTER/geojson/municities"
+TOPOJSON="$ROOT/$QUARTER/topojson/municities"
 
 unzip -o -q $SHAPEFILE/PH_Adm4_BgySubMuns.shp.zip -d $SHAPEFILE/municities/
 unzip -o -q $SHAPEFILE/PH_Adm3_MuniCities.shp.zip -d $SHAPEFILE/provdists/

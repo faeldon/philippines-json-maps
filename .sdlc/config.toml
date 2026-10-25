@@ -1,7 +1,8 @@
 [commands]
-# Every published 2023 file parses, and no script output is sitting under scripts/2023/
-# (the scripts write there when run from scripts/; 8bea49f3 committed a copy). Offline, ~4s.
-check = "find 2023 -name '*.json' -print0 | xargs -0 -n 500 jq empty && test -z \"$(git ls-files --cached --others --exclude-standard scripts/2023)\""
+# Every file in latest/ parses, and nothing that must stay out of the tree is in it: a build
+# directory (<quarter>/), dist/, a copy under scripts/ (8bea49f3 committed one), or any hires/
+# file (hires ships only in releases). Offline, a few seconds.
+check = "find latest -name '*.json' -print0 | xargs -0 -n 500 jq empty && test -z \"$(git ls-files --cached --others --exclude-standard -- ':(glob)[0-9][0-9][0-9][0-9]-[1-4]q/**' dist 'scripts/20*' ':(glob)**/hires/**')\""
 
 [docs]
 # The guide is AGENTS.md; CLAUDE.md only imports it, so the invariants live in AGENTS.md.
@@ -15,6 +16,16 @@ target = "github"
 # The default branch is master, not main. Pinned so a local `main` branch, if one
 # ever appears, can't take over as the base.
 base = "master"
+
+[release]
+# latest/ is what a release versions: its manifest's one "version" line is the version.
+version_files = ["latest/manifest.json"]
+tag = "v{version}"
+# Zips every format and resolution of the quarter latest/ holds, hires included, from its ignored
+# build directory into ignored dist/<tag>/, with SHA256SUMS and the notes (renamed paths).
+prepare = "scripts/release-assets.sh {tag}"
+# Uploads dist/<tag>/ as the GitHub release; refuses if it already exists (releases are immutable).
+publish = "scripts/release-publish.sh {tag}"
 
 [retro]
 # What users did, as counts, for the product pass. Needs the network; only /sdlc:retro runs them.

@@ -239,9 +239,9 @@ Advance `stage: test` and run what proves the change. **Two kinds of check, spli
   `/sdlc:ship` runs it when a changed path matches `commands.build_when`, and on every change
   when `build_when` is unset.
 
-The gate (`commands.check`) parses every JSON file under `2023/` with `jq`, and fails if
-anything, tracked or untracked, sits under `scripts/2023/`, which is where the scripts write when
-run from `scripts/` as the README says. There is no slower check: regenerating needs the source
+The gate (`commands.check`) parses every JSON file under `latest/` with `jq`, and fails if
+anything not ignored, tracked or untracked, sits under a build directory (`<quarter>/`), `dist/`,
+`scripts/20*`, or any `hires/`: only `latest/`'s medres and lowres are committed. There is no slower check: regenerating needs the source
 shapefiles, `gdal` and `mapshaper`, and the scripts `rm -rf` their output first. So a change that
 regenerates proves its codes in `checks.md`: for example, a `jq` check that a municipality's
 code appears in its parent's file and in no other file at that level. Always give Claude a way

@@ -8,14 +8,6 @@
 > a change touches, `/sdlc:ship` adds and retires entries, and `/sdlc:retro` counts them by theme
 > and age; history keeps a retired one.
 
-## 012-1 [docs] README states the output projection as EPSG:32651
-- **raised:** 2026-10-25 by 012-build-from-psgc-releases (correctness)
-- **paths:** README.md
-- **cost:** S  **value:** med
-
-`README.md` says "Maps are using EPSG:32651, Lat/Long projection." The published files are WGS84
-lon/lat (EPSG:4326); EPSG:32651 is the source shapefiles' UTM projection.
-
 ## 012-2 [robustness] fetch-shapefiles.sh prints a git "fatal" outside a checkout
 - **raised:** 2026-10-25 by 012-build-from-psgc-releases (correctness)
 - **paths:** scripts/fetch-shapefiles.sh
@@ -31,3 +23,11 @@ the staging path resolves relative to the cwd; the release download still runs.
 
 A staging copy is verified against its own `SHA256SUMS`; `meta.json` records that file's hash
 (`sha256sums`), which would anchor it to the release.
+
+## 013-1 [robustness] release-legacy.sh can't resume after a partial failure
+- **raised:** 2026-10-25 by 013-publish-2026-3q (correctness)
+- **paths:** scripts/release-legacy.sh
+- **cost:** S  **value:** low
+
+If `gh release create` fails after the tag was pushed, a rerun stops at `git tag -a` (the tag
+exists), so resuming needs a manual `git tag -d`; it could reuse a tag already at REF.

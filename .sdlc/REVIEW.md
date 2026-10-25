@@ -42,16 +42,19 @@ And the ways this repo has failed:
   (`adm1_psgc`, `adm2_psgc`, `adm3_psgc`) isn't the code in the file's name, or a parent's file is
   missing children it should have. Davao City in Davao del Sur (`8bea49f3`, `8eeead56`) and NCR
   districts with no municipalities (`c389e081`) were both this.
-- **Output in the wrong place.** Run from `scripts/`, as the README says, the scripts write
-  `scripts/2023/...`; the published files are `2023/...` at the root. `8bea49f3` committed a full
-  second copy under `scripts/`, and `8eeead56` took it out. The gate catches it; review checks
-  the root files actually changed.
+- **Output in the wrong place.** The scripts build a quarter into `<quarter>/` at the root
+  (ignored); only `latest/`, medres and lowres, is committed. A build directory, `dist/`, a
+  `hires/` file or a copy under `scripts/` in the diff is this: `8bea49f3` committed a full second
+  copy under `scripts/2023/`, and `8eeead56` took it out. The gate catches it; review checks
+  `latest/` actually changed, and that `publish-latest.sh` made it.
 - **A file renamed by accident.** A PSGC code is used as the shapefile gives it, as an integer
   (`provdists-region-100000000`, not `0100000000`). Padding, stripping or retyping a code renames
   every file built from it, and breaks every hotlink to them.
 - **Resolutions out of step.** A level changed in one of `hires`/`medres`/`lowres`, or in GeoJSON
   but not TopoJSON. Each changed feature should change in all six files of its parent.
-- **An old vintage touched.** Any path under `2011/` or `2019/` in the diff.
+- **A published release changed.** Old vintages live only in releases (`2011`, `2019`,
+  `2023-4q`, `v*`). A script or step that re-uploads, deletes or replaces a release's assets is
+  this; a new quarter is a new release.
 
 ## Pass 2 — Contract
 

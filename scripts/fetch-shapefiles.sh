@@ -18,6 +18,7 @@ FILES=(
   PH_Adm2_ProvDists.shp.zip
   PH_Adm3_MuniCities.shp.zip
   PH_Adm4_BgySubMuns.shp.zip
+  PH_Adm1_Regions.csv
   PH_Adm2_ProvDists.csv
   PH_Adm3_MuniCities.csv
   PH_Adm4_BgySubMuns.csv

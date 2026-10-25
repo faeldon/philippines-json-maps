@@ -27,24 +27,15 @@ echo "[MUNICITIES] Generataing Municipality and City List"
 ogr2ogr -f CSV -select adm3_psgc $SHAPEFILE/municities_raw.csv $SHAPEFILE/provdists/PH_Adm3_MuniCities.shp
 sed 1d $SHAPEFILE/municities_raw.csv > $SHAPEFILE/municities.csv # Remove header
 rm $SHAPEFILE/municities_raw.csv
-array=()
 
-# Read the file in parameter and fill the array named "array"
-getArray() {
-  i=0
-  while read line # Read a line
-  do
-    array[i]=$line # Put it into the array
-    i=$(($i + 1))
-  done < $1
-}
+# How many municipalities to build at once; set JOBS to override.
+JOBS="${JOBS:-$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 4)}"
 
-echo "[MUNICITIES] Reading Array"
-getArray "$SHAPEFILE/municities.csv"
-
-for e in "${!array[@]}"
-do
-  f=`echo ${array[$e]} | tr -dc '[:alnum:]\n\r' | tr '[:upper:]' '[:lower:]'`
+# One municipality or city: extract its barangays, then write its six simplified files.
+# Each writes only its own files, so they run $JOBS at a time.
+build_municity() {
+  set -euo pipefail
+  f=$1
   echo "[BGYSUBMUNS] Processing $f"
   # geom_src = 'none' rows have no shape (Manila's sub-municipalities); their barangays do.
   ogr2ogr -mapFieldType Date=String -where "adm3_psgc=$f AND geom_src <> 'none'" -t_srs "EPSG:4326" -f GeoJSON $GEOJSON/bgysubmuns-municity-${f}.json $SHAPEFILE/municities/PH_Adm4_BgySubMuns.shp
@@ -58,6 +49,13 @@ do
   mapshaper $GEOJSON/bgysubmuns-municity-${f}.json -simplify 0.1% keep-shapes -o format=topojson id-field=adm4_psgc $TOPOJSON/lowres/bgysubmuns-municity-${f}.topo.0.001.json
 
   rm $GEOJSON/bgysubmuns-municity-${f}.json # Delete because this is a large file
-done
+}
+export -f build_municity
+export SHAPEFILE GEOJSON TOPOJSON
+
+echo "[MUNICITIES] Processing $(wc -l < "$SHAPEFILE/municities.csv" | tr -d ' ') municipalities and cities, $JOBS at a time"
+# xargs exits non-zero if any municipality fails, which fails the script.
+tr -dc '[:alnum:]\n\r' < "$SHAPEFILE/municities.csv" | tr -d '\r' | tr '[:upper:]' '[:lower:]' \
+  | xargs -n 1 -P "$JOBS" bash -c 'build_municity "$1"' _
 
 rm $SHAPEFILE/municities.csv

@@ -35,8 +35,9 @@ which puts the release's zips and CSVs in `scripts/processed/<quarter>/` (gitign
 from `../philippines-psgc-shapefiles/release-staging/<quarter>/` when that verifies
 (`PSGC_STAGING` overrides it) and otherwise downloaded from the release, then checked against
 `SHA256SUMS`. Each script `rm -rf`s its level's output before writing it. municities takes the
-longest by far. `publish-latest.sh` refuses a build whose file counts don't match the release
-CSVs, and keeps the manifest's `version`, which only `/sdlc:release` changes.
+longest; it builds `JOBS` municipalities at once (default: every core). `publish-latest.sh`
+refuses a build whose file counts don't match the release CSVs, and keeps the manifest's
+`version`, which only `/sdlc:release` changes.
 
 Releases: `/sdlc:release` bumps `latest/manifest.json`'s version and tags `v<version>`; its
 `release.prepare` (`scripts/release-assets.sh`) zips the quarter's build directory, hires

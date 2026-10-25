@@ -1,6 +1,5 @@
-# Input Data 
+# Source data: fetched shapefiles and CSVs
 scripts/processed/
-scripts/2023/processed/
 
 # Build output: one directory per quarter, and release assets
 /[0-9][0-9][0-9][0-9]-[1-4]q/

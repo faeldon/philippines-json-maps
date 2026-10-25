@@ -23,11 +23,3 @@ the staging path resolves relative to the cwd; the release download still runs.
 
 A staging copy is verified against its own `SHA256SUMS`; `meta.json` records that file's hash
 (`sha256sums`), which would anchor it to the release.
-
-## 013-1 [robustness] release-legacy.sh can't resume after a partial failure
-- **raised:** 2026-10-25 by 013-publish-2026-3q (correctness)
-- **paths:** scripts/release-legacy.sh
-- **cost:** S  **value:** low
-
-If `gh release create` fails after the tag was pushed, a rerun stops at `git tag -a` (the tag
-exists), so resuming needs a manual `git tag -d`; it could reuse a tag already at REF.

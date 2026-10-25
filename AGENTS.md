@@ -43,8 +43,8 @@ Releases: `/sdlc:release` bumps `latest/manifest.json`'s version and tags `v<ver
 `release.prepare` (`scripts/release-assets.sh`) zips the quarter's build directory, hires
 included, into `dist/<tag>/` with `SHA256SUMS` and notes (renamed paths from
 `scripts/renamed-paths.sh`); `/sdlc:publish` pushes and runs `scripts/release-publish.sh`. The
-build directory must exist in the checkout that releases. `scripts/release-legacy.sh` made the
-one-off releases `2023-4q`, `2019` and `2011` from history.
+build directory must exist in the checkout that releases. The one-off releases `2023-4q`, `2019`
+and `2011` were made from history by a script since removed (see change 013).
 
 ## How the files are made
 

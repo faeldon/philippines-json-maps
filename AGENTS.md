@@ -1,7 +1,8 @@
 # AGENTS.md
 
 Philippine administrative boundaries as GeoJSON and TopoJSON, generated from the PSGC shapefiles
-in [altcoder/philippines-psgc-shapefiles](https://github.com/altcoder/philippines-psgc-shapefiles).
+released by [faeldon/philippines-psgc-shapefiles](https://github.com/faeldon/philippines-psgc-shapefiles)
+(`2023/` from release `psgc-2023-4q`).
 The repo is data: the JSON files are the product, and the scripts in `scripts/` made them.
 
 ## Commands
@@ -18,9 +19,13 @@ jq empty 2023/topojson/regions/lowres/provdists-region-1100000000.topo.0.001.jso
 jq '[.features[].properties.adm2_psgc] | unique' 2023/geojson/provdists/lowres/municities-provdist-1102400000.0.001.json
 ```
 
-Regenerating needs `brew install gdal`, `npm install -g mapshaper`, and the source zips copied
-into `scripts/2023/processed/` (gitignored). The scripts run from `scripts/`, in order: country,
-regions, provdists, municities. Each `rm -rf`s its level's output before writing it.
+Regenerating needs `brew install gdal` and `npm install -g mapshaper`. Run the scripts in order,
+from anywhere: country, regions, provdists, municities. Each first runs
+`scripts/fetch-shapefiles.sh <tag> <quarter>`, which puts the release's zips and CSVs in
+`scripts/processed/<quarter>/` (gitignored), copied from
+`../philippines-psgc-shapefiles/release-staging/<quarter>/` when that verifies (`PSGC_STAGING`
+overrides it) and otherwise downloaded from the release, then checked against `SHA256SUMS`.
+Each script `rm -rf`s its level's output before writing it. municities takes the longest by far.
 
 ## How the files are made
 
@@ -41,8 +46,16 @@ File names are `<children>-<parent level>-<parent psgc>[.topo].<0.1|0.01|0.001>.
 code written as an integer (`100000000` for region 01). Every feature also carries the codes of
 all its ancestors in `properties` (`adm1_psgc` … ), which is how a misfiled area shows.
 
-The scripts write relative to `scripts/`, so a run lands in `scripts/2023/...`; the published
-copy is `2023/...` at the root, and the output has to be moved there.
+The scripts find the repo root from their own path and write `2023/...` there. Each pins its
+vintage in one header line (`YEAR=2023 TAG=psgc-2023-4q QUARTER=2023-4q`). The source layers are in
+EPSG:32651 metres; `ogr2ogr -t_srs EPSG:4326` and `mapshaper -proj wgs84` reproject them.
+Barangay rows with `geom_src = 'none'` have no shape and are left out.
+
+mapshaper's `-simplify N%` keeps N% of the *whole layer's* vertices, so adding or removing one
+feature from a parent's file reshapes its neighbours at medres and lowres. A membership change
+shows up as geometry diffs across that whole file.
+Every `-simplify` carries `keep-shapes`; without it, small barangays collapse to `geometry: null`
+at medres and lowres (911 did before change 012).
 
 ## Invariants
 

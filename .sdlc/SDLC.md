@@ -186,11 +186,12 @@ marking a branch `main` has moved past. `/sdlc:ship` brings such a branch up to 
 gate runs, so the tests and the review see what will land, and stops, touching nothing, when
 that would conflict.
 
-A fresh worktree has no source shapefiles: they are gitignored and come from
-[altcoder/philippines-psgc-shapefiles](https://github.com/altcoder/philippines-psgc-shapefiles).
-A change that regenerates copies the zips into `scripts/2023/processed/` by hand, and needs `gdal`
-and `mapshaper` installed. `commands.worktree_setup` is unset because most changes don't
-regenerate.
+A fresh worktree has no source shapefiles: they are gitignored, and the generation scripts fetch
+them on their first run (`scripts/fetch-shapefiles.sh`, from a local
+`philippines-psgc-shapefiles` checkout or the
+[faeldon/philippines-psgc-shapefiles](https://github.com/faeldon/philippines-psgc-shapefiles)
+release, about 700 MB per quarter). A change that regenerates needs `gdal` and `mapshaper`
+installed. `commands.worktree_setup` is unset because most changes don't regenerate.
 
 ## Running the stages
 

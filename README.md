@@ -46,9 +46,11 @@ Same with municipalities and cities and barangays.
 
 Maps are using EPSG:32651, Lat/Long projection.
 
-The shapefiles used as source for this project is available from [altcoder/philippines-psgc-shapefiles](https://github.com/altcoder/philippines-psgc-shapefiles).
+The shapefiles used as source for this project are published as releases of [faeldon/philippines-psgc-shapefiles](https://github.com/faeldon/philippines-psgc-shapefiles). The `2023/` maps are built from release [`psgc-2023-4q`](https://github.com/faeldon/philippines-psgc-shapefiles/releases/tag/psgc-2023-4q).
 
 The administrative level shapefiles uses PSGC data updated as of [31 December 2023](https://psa.gov.ph/system/files/scd/PSGC-4Q-2023-National-and-Provincial-Summary.xlsx).
+
+**BARMM interim province file moved.** The interim province for the 63 BARMM barangays has PSGC code `1999900000` in the source release, so its municipalities are now in `municities-provdist-1999900000.*`. The old `municities-provdist-1909900000.*` files were empty and have been removed.
 
 ## Previous Maps
 
@@ -88,9 +90,7 @@ npm install -g mapshaper
 
 2. Modify scripts under `scripts/`
 
-3. Copy shapefiles (zipped) from [altcoder/philippines-psgc-shapefiles](https://github.com/altcoder/philippines-psgc-shapefiles) to `scripts/2023/processed` directory.
-
-4. Run the scripts (in order). Note that running barangays-topojson.sh might take a few minutes to finish.
+3. Run the scripts (in order). Each one fetches the shapefiles it needs with `scripts/fetch-shapefiles.sh` into `scripts/processed/2023-4q/` (ignored by git) and checks them against the release's `SHA256SUMS`. It copies them from a local checkout of `philippines-psgc-shapefiles` beside this repo when one has them (set `PSGC_STAGING` to point elsewhere), and otherwise downloads them from the release. Note that running topojson-municities.sh might take a while to finish.
 
 ```bash
 cd scripts

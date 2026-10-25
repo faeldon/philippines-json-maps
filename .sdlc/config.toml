@@ -1,0 +1,20 @@
+[commands]
+# Every published 2023 file parses, and no script output is sitting under scripts/2023/
+# (the scripts write there when run from scripts/; 8bea49f3 committed a copy). Offline, ~4s.
+check = "find 2023 -name '*.json' -print0 | xargs -0 -n 500 jq empty && test -z \"$(git ls-files --cached --others --exclude-standard scripts/2023)\""
+
+[docs]
+# The guide is AGENTS.md; CLAUDE.md only imports it, so the invariants live in AGENTS.md.
+policy = "AGENTS.md"
+
+[archive]
+# Changes are numbered by their GitHub issue on faeldon/philippines-json-maps.
+target = "github"
+
+[retro]
+# What users did, as counts, for the product pass. Needs the network; only /sdlc:retro runs them.
+evidence = [
+  "gh api repos/faeldon/philippines-json-maps/traffic/clones --jq '\"clones \\(.count) uniques \\(.uniques)\"'",
+  "gh api repos/faeldon/philippines-json-maps/traffic/views --jq '\"views \\(.count) uniques \\(.uniques)\"'",
+  "gh issue list -R faeldon/philippines-json-maps --state all --limit 500 --json state --jq 'group_by(.state) | map(\"\\(.[0].state) \\(length)\") | .[]'",
+]

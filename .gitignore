@@ -1,5 +1,9 @@
 # Input Data 
 scripts/processed/
+scripts/2023/processed/
 
 # Cruft
 .DS_Store
+
+# sdlc: one worktree per change
+.claude/worktrees/

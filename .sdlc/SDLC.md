@@ -50,6 +50,38 @@ work/inbox.md ──/sdlc:intent──▶ intent.md ──/sdlc:spec──▶ sp
                  (Stage 6 tiers findings; response tier 3 writes a new intent)
 ```
 
+### Seeds, and the changes they become
+
+Every entry in `work/inbox.md` is a **seed**: something a change may grow from. Its tag is its
+kind, which says where it came from:
+
+| Seed | What it is | Written by |
+|---|---|---|
+| `[idea]` | a change someone proposes: something new, or something better | a person, `/sdlc:retro`, `/sdlc:ship` carrying a note |
+| `[bug]` | something already shipped that is broken | `/sdlc:bug` |
+| `[nit]` | a finding `/sdlc:ship` approved unfixed | `/sdlc:ship` |
+
+`[building]` marks an idea a change is building. A `[seed]` tag, from before ideas had their own,
+reads as `[idea]`.
+
+A change has a **type**, which says what it does: the word a changelog or a commit prefix would
+use. The kind of seed suggests the type, never fixes it:
+
+| Type | What the change does | Usually grows from |
+|---|---|---|
+| `feature` | adds something a user can do or see | an idea |
+| `fix` | makes something broken work as it should | a bug |
+| `refactor` | changes the code's shape, not what it does | a nit, an idea |
+| `perf` | makes something faster or cheaper, nothing else | an idea, a nit |
+| `docs` | changes only documentation | an idea, a nit |
+| `test` | adds or fixes tests alone | a nit |
+| `chore` | tooling, dependencies, process: nothing a user sees | an idea, a nit |
+
+The type is apart from the tier (how much ceremony a change owes) and from `impact:` (what a
+release does to its users): a `fix` can be a `minor`, a `feature` a Tier 1. These are the words
+the plugin uses; a repo whose commits name a type, as a prefix (`fix: …`) or otherwise, uses
+them, and one whose commits don't leaves them out.
+
 ## Three loops
 
 The six stages are one loop, run once per change. Two slower loops sit around it, and each one
@@ -199,7 +231,7 @@ installed. `commands.worktree_setup` is unset because most changes don't regener
 
 Interviews you, assigns a tier, drafts `intent.md`, gates, then opens the change (its GitHub issue
 first, when that's how changes are numbered) and **stops**. If the change came from a
-`work/inbox.md` seed, it sets the `idea:` backlink and marks the seed `[building]`.
+`work/inbox.md` seed, it sets the `idea:` backlink and marks the idea `[building]`.
 
 A data-error report becomes an intent that names the PSGC codes involved and the parent each
 belongs under in the PSA's PSGC release. "Fix Davao" is not an intent; one that says which area
@@ -291,7 +323,7 @@ A Nit approved unfixed isn't lost in the findings count: ship records it in `wor
 `[nit]` entry, with `Theme:`, `Paths:`, `Cost:`, `Value:` and `Raised by: NNN-slug (pass)` lines,
 and a later ship retires it once a diff fixes it or makes it moot. Each is weighed the same way:
 - **cost:** `S`, one sitting and a few lines · `M`, a test or several files · `L`, a design call.
-  An `L` is a `work/inbox.md` seed, not a nit.
+  An `L` is a `work/inbox.md` idea, not a nit.
 - **value:** `med`, a user or host could hit it on an edge case · `low`, only a reader of the code
   notices. One users would hit in normal use, or that loses work, is never a nit: it is Important.
 - **theme:** `docs`, `refactor`, `robustness`, `tests` or `style`, or one of this repo's own, so
@@ -308,7 +340,7 @@ cycle is for shipping.
 A bug is something that shipped and is broken, with a way to see it: a `[bug]` entry in
 `work/inbox.md`, filed by `/sdlc:bug` with `Severity:` and `Paths:` lines, and an
 `Introduced by: NNN-slug` line once someone confirms which change let it through. A request for
-something nobody has built is a seed, and a finding in a diff under review is a nit or Important.
+something nobody has built is an idea, and a finding in a diff under review is a nit or Important.
 Each is weighed the same way:
 - **severity:** `high`, it loses work, gives a wrong number or stops a stage · `med`, its output
   is wrong and there is a way round it · `low`, a message or a rough edge.

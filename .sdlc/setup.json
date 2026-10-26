@@ -1,5 +1,5 @@
 {
-  "version": "1.3.0",
+  "version": "1.4.0",
   "config_keys": [
     "archive.command",
     "archive.target",
@@ -43,7 +43,7 @@
         "#": "sha256:f41a054e590aeda9",
         "## The point of the process": "sha256:ca2362e0a35d48c9",
         "## The six stages": "sha256:805d3f0b33d64254",
-        "## The six stages > ### Seeds, and the changes they become": "sha256:ea984ea6f81169dc",
+        "## The six stages > ### Seeds, and the changes they become": "sha256:d943fd48fcf1efcd",
         "## Three loops": "sha256:070c411552f89db1",
         "## Three loops > ### Where the playbook fits": "sha256:89d308063381923a",
         "## Tiers: the overhead control": "sha256:49dfbb654da6058d",

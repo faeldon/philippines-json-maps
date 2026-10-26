@@ -57,7 +57,7 @@ kind, which says where it came from:
 
 | Seed | What it is | Written by |
 |---|---|---|
-| `[idea]` | a change someone proposes: something new, or something better | a person, `/sdlc:retro`, `/sdlc:ship` carrying a note |
+| `[idea]` | a change someone proposes: something new, or something better | `/sdlc:idea`, `/sdlc:retro`, `/sdlc:ship` carrying a note |
 | `[bug]` | something already shipped that is broken | `/sdlc:bug` |
 | `[nit]` | a finding `/sdlc:ship` approved unfixed | `/sdlc:ship` |
 

@@ -7,7 +7,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
   echo "usage: $(basename "$0") TAG QUARTER   (e.g. v1.0.0 2026-3q)" >&2; exit 2; }
 TAG=$1 QUARTER=$2
 
-for level in country regions provdists municities; do
+for level in country islandgroups regions provdists municities; do
   "$ROOT/scripts/topojson-$level.sh" "$TAG" "$QUARTER"
 done
 

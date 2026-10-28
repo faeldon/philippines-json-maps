@@ -15,7 +15,7 @@ DIST="$ROOT/dist/$TAG"
 
 [ -d "$BUILD" ] || { echo "$BUILD missing: run build-quarter.sh $SRC_TAG $QUARTER first" >&2; exit 1; }
 for fmt in geojson topojson; do
-  for level in country regions provdists municities; do
+  for level in country islandgroups regions provdists municities; do
     for res in medres lowres; do
       diff -rq "$BUILD/$fmt/$level/$res" "$ROOT/latest/$fmt/$level/$res" >/dev/null || {
         echo "refusing: $BUILD/$fmt/$level/$res differs from latest/" >&2; exit 1; }
@@ -49,6 +49,20 @@ done
     since="$prev" base=("$prev" latest)
   else
     since="2023/" base=(195f6db2 2023)
+  fi
+  # Levels latest/ has that the previous release's latest/ didn't (islandgroups/ in the first
+  # release with it): every file of theirs is a new path.
+  if [ "$since" = "$prev" ]; then
+    added=$(cd "$ROOT/latest" && for d in geojson/* topojson/*; do
+      git -C "$ROOT" cat-file -e "$prev:latest/$d" 2>/dev/null || echo "$d"; done)
+    if [ -n "$added" ]; then
+      echo "## Added paths since \`$prev\`"
+      echo
+      echo "New levels in \`latest/\`; their hires files are in the zips."
+      echo
+      for d in $added; do (cd "$ROOT" && find "latest/$d" -name '*.json' | sort | sed 's/^/- `/; s/$/`/'); done
+      echo
+    fi
   fi
   echo "## Renamed paths since \`$since\`"
   echo

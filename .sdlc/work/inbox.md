@@ -29,14 +29,16 @@ Cost: S
 Value: low
 Raised by: 012-build-from-psgc-releases (correctness)
 
-## [2026-10-28-1] [seed] Island-group maps (Luzon, Visayas, Mindanao)
+## [2026-10-28-2] [idea] Build islandgroups into the main checkout's 2026-3q before releasing
 
-A country-level file of the three island groups, dissolved from the regions in `country/` (e.g.
-mapshaper `-dissolve` on a region-to-group lookup). Not a PSGC level, so it needs a fixed mapping
-(where MIMAROPA and NIR fall) and a name and place outside the four level directories.
+018 added the `islandgroups/` level to `latest/` from a clone of the 2026-3q build in its
+worktree; the main checkout's `2026-3q/` doesn't have it. Before `/sdlc:release`, run
+`scripts/topojson-islandgroups.sh v1.0.0 2026-3q` in the main checkout: `release-assets.sh`
+refuses until its output matches the committed `latest/`. See
+`.sdlc/work/018-island-group-maps/notes.md` in 018's commit.
 
-Theme: coverage
-Paths: scripts/, latest/
+Theme: release
+Paths: 2026-3q/ (build, gitignored)
 Cost: S
-Value: low
-Raised by: GitHub issue #2
+Value: high
+Raised by: 018-island-group-maps (notes)

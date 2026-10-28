@@ -30,8 +30,8 @@ scripts/publish-latest.sh 2026-3q         # replaces latest/ with its medres + l
 scripts/sample-maps.sh                    # redraws the README's images/ from latest/
 ```
 
-`build-quarter.sh` runs the four level scripts in order (country, regions, provdists,
-municities; each takes the same `TAG QUARTER` and prints its usage without them) and writes
+`build-quarter.sh` runs the five level scripts in order (country, islandgroups, regions,
+provdists, municities; each takes the same `TAG QUARTER` and prints its usage without them) and writes
 `<quarter>/build.json`. Each script first runs `scripts/fetch-shapefiles.sh <tag> <quarter>`,
 which puts the release's zips and CSVs in `scripts/processed/<quarter>/` (gitignored), copied
 from `../philippines-psgc-shapefiles/release-staging/<quarter>/` when that verifies
@@ -39,12 +39,14 @@ from `../philippines-psgc-shapefiles/release-staging/<quarter>/` when that verif
 `SHA256SUMS`. Each script `rm -rf`s its level's output before writing it. municities takes the
 longest; it builds `JOBS` municipalities at once (default: every core). `publish-latest.sh`
 refuses a build whose file counts don't match the release CSVs, and keeps the manifest's
-`version`, which only `/sdlc:release` changes.
+`version`, which only `/sdlc:release` changes. `release-assets.sh` refuses a build directory
+whose medres or lowres differs from `latest/`, so one built before a level existed can't release.
 
 Releases: `/sdlc:release` bumps `latest/manifest.json`'s version and tags `v<version>`; its
 `release.prepare` (`scripts/release-assets.sh`) zips the quarter's build directory, hires
-included, into `dist/<tag>/` with `SHA256SUMS` and notes (renamed paths from
-`scripts/renamed-paths.sh`); `/sdlc:publish` pushes and runs `scripts/release-publish.sh`. The
+included, into `dist/<tag>/` with `SHA256SUMS` and notes (levels added since the previous tag,
+and renamed paths from `scripts/renamed-paths.sh`); `/sdlc:publish` pushes and runs
+`scripts/release-publish.sh`. The
 build directory must exist in the checkout that releases. The one-off releases `2023-4q`, `2019`
 and `2011` were made from history by a script since removed (see change 013).
 
@@ -59,6 +61,7 @@ files with `mapshaper`: GeoJSON and TopoJSON, each simplified to 10% (`hires`, `
 | Script | Directory | One file per | Holds | Feature id |
 |---|---|---|---|---|
 | `topojson-country.sh` | `country/` | the country | regions | `adm1_psgc` |
+| `topojson-islandgroups.sh` | `islandgroups/` | the country | Luzon, Visayas, Mindanao | `island_group` |
 | `topojson-regions.sh` | `regions/` | region | provinces and districts | `adm2_psgc` |
 | `topojson-provdists.sh` | `provdists/` | province or district | municipalities and cities | `adm3_psgc` |
 | `topojson-municities.sh` | `municities/` | municipality or city | barangays and sub-municipalities | `adm4_psgc` |
@@ -68,6 +71,12 @@ code written as an integer (`100000000` for region 01). Every feature also carri
 all its ancestors in `properties` (`adm1_psgc` … ), which is how a misfiled area shows. A name
 changes when its parent's code does (3Q 2026 renamed 4 `provdists/` and 82 `municities/` files,
 from the Negros Island Region and Sulu's transfer), and each release's notes list those.
+
+`islandgroups/` is the exception: not a PSGC level, and not split by `ogr2ogr`. It dissolves the
+region layer by `scripts/island-groups.csv` (MIMAROPA in Luzon, NIR in the Visayas), simplifying
+*before* the dissolve so every vertex is one of `country/`'s at the same resolution, and refuses
+to build when that mapping doesn't name each of the quarter's regions exactly once. A new region
+code stops it until the CSV gets a row.
 
 The scripts find the repo root from their own path and write `<quarter>/...` there. The source
 layers are in EPSG:32651 metres; `ogr2ogr -t_srs EPSG:4326` and `mapshaper -proj wgs84`
@@ -92,7 +101,9 @@ at medres and lowres (911 did before change 012).
   trailers). Only the newest quarter is in the tree, at `latest/`, medres and lowres only.
 - **The PSGC hierarchy holds.** Feature ids are the PSGC code of their level, and each child file
   holds exactly the children of the parent its name gives: every feature's parent code is that
-  code, and no child of that parent is missing or in another file.
+  code, and no child of that parent is missing or in another file. `islandgroups/` is the one
+  level outside the PSGC: its ids are its names (`Luzon`, `Visayas`, `Mindanao`), and
+  `scripts/island-groups.csv` sets which regions each holds, every region in exactly one.
 - **Output location and form.** Generated files are committed only under `latest/`; build
   directories, `dist/` and source shapefiles never are. WGS84 longitude/latitude, at 10%, 1% and
   0.1% from one source, with `keep-shapes` on every `-simplify`.

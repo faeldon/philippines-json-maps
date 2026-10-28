@@ -50,6 +50,7 @@ Each directory holds one file per area of a level, containing that area's childr
 | Directory | One file per | Holds | Feature `id` |
 | --- | --- | --- | --- |
 | `country/` | the country | regions | `adm1_psgc` |
+| `islandgroups/` | the country | island groups: Luzon, Visayas, Mindanao | `island_group` |
 | `regions/` | region | provinces and NCR districts | `adm2_psgc` |
 | `provdists/` | province or district | municipalities and cities | `adm3_psgc` |
 | `municities/` | municipality or city | barangays and sub-municipalities | `adm4_psgc` |
@@ -59,7 +60,8 @@ example `municities-provdist-1804500000.0.001.json` holds the municipalities and
 Occidental. The simplification is 0.1 (`hires`, 10% of the vertices), 0.01 (`medres`, 1%) or
 0.001 (`lowres`, 0.1%). In TopoJSON, the one object is named like the file, without `.topo` and
 the simplification (`provdists-region-200000000`); the country file's object is
-`PH_Adm1_Regions`.
+`PH_Adm1_Regions`. The two files for the whole country have no parent code in their names:
+`country.0.001.json` and `islandgroups.0.001.json`, whose TopoJSON object is `islandgroups`.
 
 ## Conventions
 
@@ -68,6 +70,7 @@ the simplification (`provdists-region-200000000`); the country file's object is
   names and in properties.
 - **Every feature carries its parents' codes.** `adm1_psgc` (region) down to its own level's code,
   plus its name (`adm2_en` …), `geo_level`, and its length and area (`len_km`, `area_km2`).
+  Island groups are the exception: they have no code (below).
 - **Coordinates are WGS84 longitude/latitude** (EPSG:4326), reprojected from the source
   shapefiles' EPSG:32651.
 - **Barangay shapes say where they come from.** `geom_src` is `source` for the boundary file's own
@@ -79,15 +82,20 @@ the simplification (`provdists-region-200000000`); the country file's object is
   (e.g. `604500000` → `1804500000`, `1906600000` → `906600000`), and with them the names of their
   files. The [v1.0.0 release notes](https://github.com/faeldon/philippines-json-maps/releases/tag/v1.0.0)
   list every renamed file.
+- **Island groups are not a PSGC level.** They have no code: each is the union of its regions,
+  and its `id` and `island_group` are its name, with `area_km2` the sum of its regions'. MIMAROPA,
+  Palawan included, is in Luzon, and the Negros Island Region is in the Visayas;
+  [`scripts/island-groups.csv`](scripts/island-groups.csv) lists every region's group. Their
+  borders are the regions' own, vertex for vertex, at the same resolution.
 
 ## Sample maps
 
-The regions of the country, the provinces of the Negros Island Region, and the municipalities and
-cities of Negros Occidental, drawn from `latest/` lowres by
+The island groups and the regions of the country, the provinces of the Negros Island Region, and
+the municipalities and cities of Negros Occidental, drawn from `latest/` lowres by
 [`scripts/sample-maps.sh`](scripts/sample-maps.sh). Any file also previews on GitHub, or in
 [geojson.io](https://geojson.io).
 
-<img src="images/regions.svg" width="260" alt="The 18 regions of the Philippines"> <img src="images/provinces.svg" width="260" alt="The provinces of the Negros Island Region"> <img src="images/municities.svg" width="260" alt="The municipalities and cities of Negros Occidental">
+<img src="images/islandgroups.svg" width="195" alt="The island groups of the Philippines: Luzon, Visayas and Mindanao"> <img src="images/regions.svg" width="195" alt="The 18 regions of the Philippines"> <img src="images/provinces.svg" width="195" alt="The provinces of the Negros Island Region"> <img src="images/municities.svg" width="195" alt="The municipalities and cities of Negros Occidental">
 
 ## Sources and license
 

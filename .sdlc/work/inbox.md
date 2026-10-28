@@ -28,3 +28,15 @@ Paths: scripts/fetch-shapefiles.sh
 Cost: S
 Value: low
 Raised by: 012-build-from-psgc-releases (correctness)
+
+## [2026-10-28-1] [seed] Island-group maps (Luzon, Visayas, Mindanao)
+
+A country-level file of the three island groups, dissolved from the regions in `country/` (e.g.
+mapshaper `-dissolve` on a region-to-group lookup). Not a PSGC level, so it needs a fixed mapping
+(where MIMAROPA and NIR fall) and a name and place outside the four level directories.
+
+Theme: coverage
+Paths: scripts/, latest/
+Cost: S
+Value: low
+Raised by: GitHub issue #2
